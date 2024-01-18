@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+    html,body {
+      height:100%;
+      width:100%;
+      margin:0;
+    }
+
+    body {
+        display:flex;
+    }
+    table {
+        margin-left:auto;
+        margin-right: auto;
+        margin-top: 100px;
+        margin-bottom: auto;
+        width: 80%;
+    }
+      table tr td, table tr th {
+        border: 1px solid black;
+        text-align: center;
+        height: 50px;
+        width: 100px;
+      }
+      table {
+        border-spacing: 0;
+      }
+
+      button{
+        padding: 10px;
+        width: 80px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        cursor: pointer;
+      }
+
+      .btn1{
+        border: none;
+        color: white;
+        background-color: #0500FF;
+        border-radius: 5px;
+      }
+
+      .btn2{
+        border: 1px solid #0500FF;
+        color: #0500FF;
+        background-color: white;
+        border-radius: 5px;
+      }
+
+      img{
+        height: 50px;
+        width: 50px;
+        object-fit: fill;
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+          <th>User Id</th>
+          <th>Name</th>
+          <th>Photo</th>
+          <th>Action</th>
+        </tr>
+        <% for(var i=0;i<users.length;i++){ %>
+          <tr>
+            <td><%= users[i].userId %></td>
+            <td>
+              <% if(users[i].name!==null){ %>
+                <%= users[i].name %>
+              <% } %>
+            </td>
+            <td>
+              <% if(users[i].filename!==null){ %>
+                <img src="../uploads/<%= users[i].filename %>" alt="">
+              <% } %>
+            </td>
+            <td>
+              <% if(users[i].flag===-1 || users[i].flag===1){ %>
+                <button class="btn2 " onclick="redirectToDeleteRoute('<%= users[i].username %>')">Delete</button>
+              <% } else { %>
+                <button class="btn1" onclick="redirectToDoneRoute('<%= users[i].username %>')">Done</button>
+                <button class="btn2" onclick="redirectToDeleteRoute('<%= users[i].username %>')">Delete</button>
+              <% } %>
+            </td>
+          </tr>
+        <% } %>
+      </table>
+</body>
+<script>
+  function redirectToDoneRoute(username){
+    window.location.href = `/done/${username}`;
+  }
+  function redirectToDeleteRoute(username){
+    window.location.href = `/delete/${username}`;
+  }
+</script>
+</html>

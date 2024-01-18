@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+html,body {
+    height:100%;
+    width:100%;
+    margin:0;
+}
+
+body {
+    display:flex;
+}
+form {
+    margin:auto;
+}
+
+form *{
+    display: block;
+}
+
+form {
+    width: 300px;
+    max-height: 100vh;
+}
+
+.name {
+    width: 295px;
+    height: 30px;
+    padding-left: 5px;
+    border: 2px solid #CDCDCD;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+
+
+.image-area {
+    height: 300px;
+    width: 300px;
+    background: #EEEEEE;
+    border: 2px dashed #CDCDCD;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+form button{
+    width: 300px;
+    height: 40px;
+    color: white;
+    background: #0500FF;
+    border: none;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+button {
+    cursor: pointer;
+}
+
+.view{
+    position: absolute;
+    right: 5%;
+    top: 5%;
+    padding: 15px;
+    border-radius: 5px;
+    color: #0500FF;
+    border: 2px solid #0500FF;
+    background: transparent;
+    width: 80px;
+}
+
+.hide {
+    display: none;
+}
+
+.sidebar {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: white;
+    height: 100vh;
+    width: 500px;
+    display: flex;
+    z-index: 4;
+}
+
+.sidearea{
+    margin: auto;
+}
+
+.sidearea *{
+    display: block;
+}
+
+.sidearea .back{
+    position: fixed;
+    top: 5%;
+    right: 5%;
+    padding: 15px;
+    width: 90px;
+    background: transparent;
+    color: #0500FF;
+    border: 2px solid #0500FF;
+    border-radius: 5px;
+}
+
+.entry {
+    width: 295px;
+    border: 2px solid #CDCDCD;
+    height: auto;
+    padding: 5px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+.entry p{
+    margin: 0;
+}
+
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(3px);
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+
+
+    </style>
+</head>
+<body>
+    <button class="view" onclick="redirectToOtherRoute()">View</button>
+    <form action="/saveuser/<%=username%>" username method="post" class="page" enctype="multipart/form-data">
+        <label for="name">Name</label>
+        <input type="text" name="name" class="name">
+        <label for="image-area">Photo</label>
+        <div class="image-area"></div>
+        <input type="file" id="fileInput" name="picture"/>
+        <button class="Upload" type="submit">upload</button>
+    </form>
+</body>
+<script>
+    const upload= document.getElementById("fileInput");
+    const result= document.querySelector(".image-area");
+
+    upload.addEventListener('change', (e) => {
+        if (e.target.files.length) {
+                // start file reader
+                    const reader = new FileReader();
+                    reader.onload = (e)=> {
+                        if(e.target.result){
+                            // create new image
+                            let img = document.createElement('img');
+                            img.id = 'image';
+                            img.src = e.target.result
+                            // clean result before
+                            result.innerHTML = '';
+                            // append new image
+                            result.appendChild(img);
+                        }
+                    };
+            reader.readAsDataURL(e.target.files[0]);
+        }
+    });
+
+    function redirectToOtherRoute() {
+        window.location.href = "/viewuser/<%=username%>";
+    }
+</script>
+</html>
